@@ -455,30 +455,7 @@ p {
 }
 
 .scroll-indicator {
-  position: absolute;
-  bottom: 40px;
-  right: 50%;
-  transform: translateX(50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  z-index: 3;
-}
-
-.scroll-text {
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 0.85rem;
-  font-weight: 600;
-}
-
-.scroll-arrow {
-  width: 24px;
-  height: 24px;
-  border-left: 2px solid rgba(255, 255, 255, 0.8);
-  border-bottom: 2px solid rgba(255, 255, 255, 0.8);
-  transform: rotate(-45deg);
-  animation: bounce 2s infinite;
+  display: none;
 }
 
 @media (max-width: 991px) {
@@ -511,8 +488,20 @@ p {
 /* ===== About Section ===== */
 .about-five {
   padding: 100px 0;
-  background: var(--light-2);
+  background: linear-gradient(135deg, var(--light-2) 0%, var(--white) 100%);
   position: relative;
+  overflow: hidden;
+}
+
+.about-five::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.05) 0%, transparent 70%);
+  border-radius: 50%;
 }
 
 .about-image-five {
@@ -525,10 +514,11 @@ p {
   border-radius: 20px;
   box-shadow: var(--shadow-xl);
   transition: var(--transition-slow);
+  border: 5px solid var(--white);
 }
 
 .about-image-five:hover img {
-  transform: translateY(-10px);
+  transform: translateY(-10px) scale(1.02);
   box-shadow: var(--shadow-2xl);
 }
 
@@ -559,19 +549,17 @@ p {
 
 .about-five-content > p {
   color: var(--dark-3);
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
   line-height: 1.9;
+  font-size: 1.05rem;
 }
 
 .about-five-tab {
-  margin: 2rem 0;
+  margin: 3rem 0;
 }
 
 .about-five-tab nav {
-  background: var(--white);
-  padding: 0.5rem;
-  border-radius: 15px;
-  box-shadow: var(--shadow-sm);
+  display: none;
 }
 
 .nav-tabs {
@@ -607,12 +595,99 @@ p {
 }
 
 .tab-content {
-  padding: 1.5rem 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+.tab-pane {
+  opacity: 1 !important;
+  display: block !important;
+  background: var(--white);
+  padding: 2.5rem;
+  border-radius: 20px;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  overflow: hidden;
+  border-right: 5px solid var(--primary);
+  transition: var(--transition-slow);
+}
+
+.tab-pane:hover {
+  transform: translateX(-10px);
+  box-shadow: var(--shadow-2xl);
+  border-right-width: 8px;
+}
+
+.tab-pane::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.tab-pane#nav-who::before {
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.15) 0%, transparent 70%);
+}
+
+.tab-pane#nav-vision::before {
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+}
+
+.tab-pane#nav-history::before {
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%);
+}
+
+.tab-pane h4 {
+  color: var(--dark);
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+}
+
+.tab-pane h4::before {
+  content: '';
+  font-family: 'LineIcons';
+  font-size: 2rem;
+  width: 60px;
+  height: 60px;
+  background: var(--gradient-1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  flex-shrink: 0;
+}
+
+.tab-pane#nav-who h4::before {
+  content: '\ea32';
+}
+
+.tab-pane#nav-vision h4::before {
+  content: '\ea93';
+  background: linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%);
+}
+
+.tab-pane#nav-history h4::before {
+  content: '\ea5f';
+  background: linear-gradient(135deg, #10B981 0%, #3B82F6 100%);
 }
 
 .tab-pane p {
   color: var(--dark-3);
   line-height: 1.9;
+  font-size: 1.05rem;
+  position: relative;
+  padding-right: 1rem;
 }
 
 .stats-wrapper {
@@ -660,6 +735,20 @@ p {
   .nav-link {
     width: 100%;
     justify-content: center;
+  }
+  
+  .tab-pane {
+    padding: 2rem 1.5rem;
+  }
+  
+  .tab-pane h4 {
+    flex-direction: column;
+    text-align: center;
+    font-size: 1.25rem;
+  }
+  
+  .tab-pane:hover {
+    transform: translateX(0) translateY(-5px);
   }
 }
 
