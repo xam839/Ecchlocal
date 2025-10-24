@@ -448,6 +448,98 @@
     console.warn(`⚠️ ${imagesWithoutAlt.length} images missing alt text`);
   }
 
+  // ===== Care Model Tabs Functionality =====
+  function initCareModelTabs() {
+    const tabButtons = document.querySelectorAll('.care-tab-btn');
+    const tabPanels = document.querySelectorAll('.care-tab-panel');
+    
+    if (tabButtons.length === 0) return;
+
+    tabButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const targetTab = this.getAttribute('data-tab');
+        
+        // Remove active class from all buttons
+        tabButtons.forEach(btn => btn.classList.remove('active'));
+        
+        // Add active class to clicked button
+        this.classList.add('active');
+        
+        // Hide all tab panels
+        tabPanels.forEach(panel => panel.classList.remove('active'));
+        
+        // Show target tab panel
+        const targetPanel = document.getElementById(targetTab);
+        if (targetPanel) {
+          targetPanel.classList.add('active');
+        }
+      });
+    });
+  }
+
+  // Initialize care model tabs
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCareModelTabs);
+  } else {
+    initCareModelTabs();
+  }
+
+  // ===== Strategy Cards Interactive Behavior =====
+  function initStrategyCards() {
+    const strategyCards = document.querySelectorAll('.strategy-card-new');
+    
+    if (strategyCards.length === 0) return;
+
+    // Apply click behavior on mobile/tablet
+    if (window.innerWidth < 992) {
+      strategyCards.forEach(card => {
+        card.addEventListener('click', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          // Check if this card is already active
+          const isActive = this.classList.contains('active');
+          
+          // Remove active class from all cards
+          strategyCards.forEach(c => c.classList.remove('active'));
+          
+          // Toggle active class on clicked card
+          if (!isActive) {
+            this.classList.add('active');
+          }
+        });
+      });
+
+      // Close card when clicking outside
+      document.addEventListener('click', function (e) {
+        if (!e.target.closest('.strategy-card-new')) {
+          strategyCards.forEach(c => c.classList.remove('active'));
+        }
+      });
+    }
+
+    // Handle window resize
+    let resizeTimeout;
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        // Remove all active classes when switching to desktop
+        if (window.innerWidth >= 992) {
+          strategyCards.forEach(c => c.classList.remove('active'));
+        }
+        // Re-initialize on resize
+        initStrategyCards();
+      }, 250);
+    });
+  }
+
+  // Initialize strategy cards
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initStrategyCards);
+  } else {
+    initStrategyCards();
+  }
+
   // ===== Console Styling (Development) =====
   const styles = [
     'color: #0EA5E9',
