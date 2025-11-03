@@ -540,6 +540,68 @@
     initStrategyCards();
   }
 
+  // ===== Health Centers Show More Functionality =====
+  function initHealthCentersShowMore() {
+    const showMoreBtn = document.getElementById('showMoreBtn');
+    const hiddenCenters = document.querySelectorAll('.hidden-center');
+    
+    if (!showMoreBtn || hiddenCenters.length === 0) return;
+    
+    let isExpanded = false;
+    
+    showMoreBtn.addEventListener('click', function() {
+      isExpanded = !isExpanded;
+      
+      if (isExpanded) {
+        // Show all hidden centers with animation
+        hiddenCenters.forEach((center, index) => {
+          setTimeout(() => {
+            center.classList.add('show');
+          }, index * 50); // Stagger the animation
+        });
+        
+        // Update button text and style
+        this.classList.add('hide-mode');
+        this.querySelector('.btn-text').textContent = 'إخفاء المراكز';
+        this.querySelector('.centers-count').textContent = '(إخفاء 24 مركز)';
+        
+        // Smooth scroll to show the new content
+        setTimeout(() => {
+          const firstHiddenCenter = document.querySelector('.hidden-center.show');
+          if (firstHiddenCenter) {
+            firstHiddenCenter.scrollIntoView({ 
+              behavior: 'smooth', 
+              block: 'nearest' 
+            });
+          }
+        }, 300);
+      } else {
+        // Hide all centers
+        hiddenCenters.forEach(center => {
+          center.classList.remove('show');
+        });
+        
+        // Update button text and style
+        this.classList.remove('hide-mode');
+        this.querySelector('.btn-text').textContent = 'عرض المزيد من المراكز';
+        this.querySelector('.centers-count').textContent = '(24 مركز آخر)';
+        
+        // Scroll back to the button
+        this.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'center' 
+        });
+      }
+    });
+  }
+
+  // Initialize health centers show more
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initHealthCentersShowMore);
+  } else {
+    initHealthCentersShowMore();
+  }
+
   // ===== Console Styling (Development) =====
   const styles = [
     'color: #0EA5E9',
