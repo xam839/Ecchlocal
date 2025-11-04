@@ -1695,6 +1695,26 @@ p {
   stroke: #0095D9;
 }
 
+/* Progress Logo in Center */
+.progress-logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 35px;
+  height: 35px;
+  object-fit: contain;
+  z-index: 3;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 1;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.progress-wrap:hover .progress-logo {
+  transform: translate(-50%, -50%) scale(1.1);
+  filter: drop-shadow(0 4px 8px rgba(14, 165, 233, 0.3));
+}
+
 /* ===== Responsive Utilities ===== */
 @media (max-width: 767px) {
   .scroll-top {
